@@ -3,7 +3,7 @@ pipeline{
 	stages{
 		stage('Checkout'){
 			steps{
-				git branch: 'master', url: 'https://github.com/AnjuMeleth/Media99.git'
+				git branch: 'master', url: 'https://github.com/imedbouajila/Media99.git'
 			}
 		}
     		stage('Setup'){
