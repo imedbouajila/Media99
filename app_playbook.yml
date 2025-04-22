@@ -14,10 +14,10 @@
    - name: Create new directory
      become_user: devops
      file:
-      path: /home/ubuntu/target
+      path: /home/devops/target
       state: directory
    - name: Copy the source code to hosts
-     copy: src=./{{ item }} dest=/home/ubuntu/target/
+     copy: src=./{{ item }} dest=/home/devops/target/
      become_user: devops
      with_items:
         - app
@@ -29,8 +29,8 @@
         - Dockerfile
         - requirements
    - name: Set the executable permission
-     command: chmod +x /home/ubuntu/target/boot.sh  
+     command: chmod +x /home/devops/target/boot.sh  
    - name: Build Docker Image
-     command: chdir=/home/ubuntu/target/ docker build . -t mediaapp
+     command: chdir=/home/devops/target/ docker build . -t mediaapp
    - name: Run Docker Container
-     command: chdir=/home/ubuntu/target/ docker run -itd -e SECRET_KEY="{{ SECRET_KEY }}" -p 8085:5000 mediaapp
+     command: chdir=/home/devops/target/ docker run -itd -e SECRET_KEY="{{ SECRET_KEY }}" -p 8085:5000 mediaapp
