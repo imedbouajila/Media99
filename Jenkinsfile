@@ -23,16 +23,27 @@ pipeline{
 				     '''
                			}
    		}
-		stage('invoke playbook'){
-      			steps{
-
-                           withCredentials([
-                    string(credentialsId: 'vaultID1', variable: 'VAULT_PASS'),
-                    string(credentialsId: 'sudo_pass', variable: 'BECOME_PASS')
-                ])
-				// ansiblePlaybook credentialsId: 'UbuntuID1', disableHostKeyChecking: true, inventory: '/etc/ansible/env', installation: 'A1', playbook: './app_playbook.yml', vaultCredentialsId: 'VaultID1' , vaultTmpPath: './secret.yml'               			
-   	ansiblePlaybook become: true, credentialsId: 'UbuntuID1', installation: 'A1', inventory: '/etc/ansible/env', playbook: './app_playbook.yml', vaultCredentialsId: 'vaultID1', vaultTmpPath: '' , extraVars: [  ansible_become_pass: "${BECOME_PASS}" ]
-           	}
-	}
-   }
+         stage('Ansible Deploy') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'sudo_pass', variable: 'BECOME_PASS')
+                    ]) {
+                        ansiblePlaybook(
+                            become: true,
+                            credentialsId: 'UbuntuID1',
+                            installation: 'A1',
+                            inventory: '/etc/ansible/env',
+                            playbook: './app_playbook.yml',
+                            vaultCredentialsId: 'vaultID1',
+                            vaultTmpPath: '',
+                            extraVars: [
+                                ansible_become_pass: "${BECOME_PASS}"
+                            ]
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
