@@ -12,13 +12,13 @@
       name: docker
       state: present
    - name: Create new directory
-     become_user: ubuntu
+     become_user: devops
      file:
       path: /home/ubuntu/target
       state: directory
    - name: Copy the source code to hosts
      copy: src=./{{ item }} dest=/home/ubuntu/target/
-     become_user: ubuntu
+     become_user: devops
      with_items:
         - app
         - migrations
