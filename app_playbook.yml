@@ -9,7 +9,7 @@
      ignore_errors: true   
    - name: Install Docker
      apt:
-      name: docker.io
+      name: docker
       state: present
    - name: Create new directory
      become_user: ubuntu
