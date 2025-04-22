@@ -3,7 +3,7 @@ pipeline{
 	stages{
 		stage('Checkout'){
 			steps{
-				git branch: 'vault', url: 'https://github.com/AnjuMeleth/Media99.git'
+				git branch: 'vault', url: 'https://github.com/imedbouajila/Media99.git'
 			}
 		}
     		stage('Setup'){
@@ -15,14 +15,13 @@ pipeline{
     		stage('Test'){
       			steps{
 				 sh '''#!/bin/bash
-				     source myprojectenv/bin/activate	
-                		     python -m unittest
+				     echo HELLO
 				     '''
                			}
    		}
 		stage('invoke playbook'){
       			steps{
-				ansiblePlaybook credentialsId: 'UbuntuID1', disableHostKeyChecking: true, inventory: '/etc/ansible/hosts', installation: 'A1', playbook: './app_playbook.yml', vaultCredentialsId: 'VaultID1'               			}
+				ansiblePlaybook credentialsId: 'UbuntuID1', disableHostKeyChecking: true, inventory: '/etc/ansible/env', installation: 'A1', playbook: './app_playbook.yml', vaultCredentialsId: 'VaultID1'               			}
    		}
 	}
-}
+
