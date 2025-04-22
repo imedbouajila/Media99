@@ -25,7 +25,7 @@ pipeline{
    		}
 		stage('invoke playbook'){
       			steps{
-				ansiblePlaybook credentialsId: 'UbuntuID1', disableHostKeyChecking: true, inventory: '/etc/ansible/env', installation: 'A1', playbook: './app_playbook.yml', vaultCredentialsId: 'VaultID1'               			}
+				ansiblePlaybook credentialsId: 'UbuntuID1', disableHostKeyChecking: true, inventory: '/etc/ansible/env', installation: 'A1', playbook: './app_playbook.yml', vaultCredentialsId: 'VaultID1' , vaultTmpPath: './secret.yml'               			}
    		}
 	}
 }
