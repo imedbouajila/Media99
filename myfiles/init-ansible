@@ -1,0 +1,59 @@
+ansible app -i env -m command -a 'date'
+#ansible-doc ping = discribtion for the module 
+#strecture de projet ansibel:
+ansible.cfg #ansible config file
+inventory.ini #inventory file
+group_vars   #group variable files
+host_vars   #host variable files
+roles       #roles 
+  role1
+     tasks
+     handlers
+     files
+     templates
+     vars 
+     defaults 
+  role2
+ playbooks
+   palybook1.yml
+   playbook2.yml
+ readme.md 
+
+#tags
+ansible-playbook --tags "install" mypb.yaml
+ansible-playbook --skip-tags "install" mypb.yml
+#execution des playbooks
+ansible-playbook mp.yml
+ansibel-playbook -i env.ini mp.yml
+ansibel-playbook --limit 'app,db' mp.yml 
+ansibel-playbook -tags "creat" mp.yml #executer que les taches tagées dans le playbool
+ansibel-playbook --become --become-user devops mp.yml #add previlage to non root user
+ansibel-playbook --vault-password-file vault_pass.txt mp.yml
+# structure de role
+roles/
+  common/  #this hierarchy represents a "role"
+    tasks/ 
+      main.yml # tasks file
+    handlers/
+      main.yml #handlers file
+    templates/
+      npt.conf.j2 # template in .j2
+    files/
+      bar.txt #files for use with the copy ressource
+      foo.sh  #script for use with the copy ressource
+    vars/
+      main.yml # variables associated with this role
+    defaults/
+      main.yml # default lower priority var for this role
+    meta/
+      main.yml #role dependencies
+    library/  #roles can also include custom modules
+    module_utils/  #roles can also include custom module_utils
+    lookup_plugins/ #or other types of plugins, like lookup in this case
+
+#création de role
+ansible-galaxy init my_role
+ansible-galaxy install postgresqm
+
+
+    
