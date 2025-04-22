@@ -5,7 +5,8 @@
   tasks:
    - name: apt-update
      apt:
-      update_cache: yes   
+      update_cache: yes
+     ignore_errors: true   
    - name: Install Docker
      apt:
       name: docker.io
