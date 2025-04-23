@@ -1,0 +1,28 @@
+---
+# tasks file for logstash
+- name: Installer Logstash
+  apt:
+    name: logstash
+    state: present
+    update_cache: yes
+
+- name: Activer et démarrer le service Logstash
+  systemd:
+    name: logstash
+    enabled: true
+    state: started
+#
+- name: Copier la config Logstash pipeline
+  copy:
+    src: logstash.conf
+    dest: /etc/logstash/conf.d/logstash.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart logstash
+
+- name: Redémarrer Logstash
+  systemd:
+    name: logstash
+    state: restarted
+

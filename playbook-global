@@ -1,0 +1,8 @@
+---
+- name: Déployer la stack ELK
+  hosts: all
+  become: true
+  roles:
+    - elasticsearch
+    - logstash
+    - kibana

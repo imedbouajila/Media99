@@ -1,0 +1,29 @@
+---
+# tasks file for kibana
+- name: Installer Kibana
+  apt:
+    name: kibana
+    state: present
+    update_cache: yes
+
+- name: Activer et démarrer le service Kibana
+  systemd:
+    name: kibana
+    enabled: true
+    state: started
+
+#
+- name: Copier la config Kibana
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart kibana
+
+- name: Redémarrer Kibana
+  systemd:
+    name: kibana
+    state: restarted
+

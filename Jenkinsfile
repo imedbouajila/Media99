@@ -10,7 +10,7 @@ pipeline{
 				git branch: 'vault', url: 'https://github.com/imedbouajila/Media99.git'
 			}
 		}
-    		stage('Setup'){
+/*    		stage('Setup'){
       			steps{
 				sh 'chmod +x install.sh'
         			sh './install.sh'
@@ -23,7 +23,7 @@ pipeline{
 				     '''
                			}
    		}
-         stage('Ansible Deploy') {
+         stage('Ansible Deploy app') {
             steps {
                 script {
                     withCredentials([
@@ -45,5 +45,26 @@ pipeline{
                 }
             }
         }
+*/
+// add block ici
+         stage('Ansible Deploy ELK') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'sudo_pass', variable: 'BECOME_PASS')
+                    ]) {
+                        ansiblePlaybook(
+                            become: true,
+                            credentialsId: 'UbuntuID1',
+                            installation: 'A1',
+                            inventory: '/etc/ansible/env',
+                            playbook: './playbook-global.yml',                                                                     extraVars: [                                                               
+                                ansible_become_pass: "${BECOME_PASS}"                                  
+                            ]                                                                          
+                        )                                                                              
+                    }                                                                                  
+                }                                                                                      
+            }                                                                                          
+        }                  
     }
 }

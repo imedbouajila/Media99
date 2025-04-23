@@ -1,0 +1,45 @@
+---
+# tasks file for elasticsearch
+- name: Installer Elasticsearch
+  apt:
+    name: apt-transport-https
+    state: present
+    update_cache: yes
+
+- name: Ajouter la clé GPG Elasticsearch
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Ajouter le repo Elasticsearch
+  apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/7.x/apt stable main"
+    state: present
+
+- name: Installer Elasticsearch
+  apt:
+    name: elasticsearch
+    state: present
+    update_cache: yes
+
+- name: Activer et démarrer le service Elasticsearch
+  systemd:
+    name: elasticsearch
+    enabled: true
+    state: started
+#
+- name: Copier la config Elasticsearch
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart elasticsearch
+
+- name: Redémarrer Elasticsearch
+  systemd:
+    name: elasticsearch
+    state: restarted
+  when: ansible_os_family == "Ubuntu"
+
