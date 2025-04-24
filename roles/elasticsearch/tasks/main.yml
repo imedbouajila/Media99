@@ -21,19 +21,40 @@
     name: elasticsearch
     state: present
     update_cache: yes
+- name: permissions
+  file:
+    path: /usr/share/elasticsearch
+    state: directory
+    owner: elasticsearch
+    group: elasticsearch
+    mode: '0755'
+- name: Modifier la taille de heap min dans jvm.options
+  ansible.builtin.lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    regexp: '^-Xms'
+    line: '-Xms512m'
+    backup: yes
+
+- name: Modifier la taille de heap max dans jvm.options
+  ansible.builtin.lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    regexp: '^-Xmx'
+    line: '-Xmx512'
+    backup: yes
 
 - name: Activer et démarrer le service Elasticsearch
   systemd:
     name: elasticsearch
     enabled: true
     state: started
-#
+
+ #
 - name: Copier la config Elasticsearch
   template:
     src: elasticsearch.yml.j2
     dest: /etc/elasticsearch/elasticsearch.yml
-    owner: root
-    group: root
+    owner: elasticsearch
+    group: elasticsearch
     mode: 0644
   notify: restart elasticsearch
 
