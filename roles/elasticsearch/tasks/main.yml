@@ -39,7 +39,7 @@
   ansible.builtin.lineinfile:
     path: /etc/elasticsearch/jvm.options
     regexp: '^-Xmx'
-    line: '-Xmx512'
+    line: '-Xmx512m'
     backup: yes
 
 - name: Activer et démarrer le service Elasticsearch
