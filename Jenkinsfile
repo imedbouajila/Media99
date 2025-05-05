@@ -59,7 +59,8 @@ pipeline{
                             installation: 'A1',
                             inventory: '/etc/ansible/env',
                             playbook: './playbook-global.yml',
-                            limit: '!10.0.2.7',                                                                     extraVars: [                                                               
+                           // limit: '!10.0.2.7',
+                             extraVars: [                                                               
                                 ansible_become_pass: "${BECOME_PASS}"                                  
                             ]                                                                          
                         )                                                                              
